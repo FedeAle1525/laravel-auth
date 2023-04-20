@@ -26,7 +26,9 @@
       @forelse ($projects as $project)
       <tr>
         <td>{{$project->id}}</td>
-        <td>{{$project->name}}</td>
+        <td>
+          <a href="{{ route('projects.show', $project) }}">{{$project->name}}</a>
+        </td>
         <td>{{$project->slug}}</td>
         <td>{{$project->description}}</td>
         <td>{{$project->client}}</td>
