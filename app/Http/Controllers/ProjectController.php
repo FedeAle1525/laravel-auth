@@ -40,7 +40,6 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
 
-        dd('STORE');
         // In $request ho già i dati compresi di validazione
         $data = $request->validated();
 
