@@ -7,7 +7,7 @@
 </div>
 
 <div class="container">
-  <form action="{{ route('projects.store') }}" method="post">
+  <form action="{{ route('projects.store') }}" method="POST">
     @csrf
 
     <div class="mb-3">
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <input type="submit" class="btn btn-primary" value="Crea">
+    <button type="submit" class="btn btn-primary">Crea</button>
   </form>
 </div>
 

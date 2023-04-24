@@ -11,9 +11,12 @@ class StoreProjectRequest extends FormRequest
      *
      * @return bool
      */
+
+    // Metodo che gestisce l'autorizzazione alla modifica dei dati
     public function authorize()
     {
-        return false;
+        // Modifico in 'true' per avere permesso
+        return true;
     }
 
     /**
@@ -21,10 +24,16 @@ class StoreProjectRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+
+    // Metodo che gestisce le regole di 'Validazione'
     public function rules()
     {
         return [
-            //
+
+            'name' => 'required|string|max:150|unique:projects,name',
+            'description' => 'nullable|string',
+            'client' => 'required|string|max:100',
+            'url' => 'nullable|url'
         ];
     }
 }

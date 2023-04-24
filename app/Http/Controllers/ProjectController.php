@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -38,7 +39,19 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+
+        dd('STORE');
+        // In $request ho già i dati compresi di validazione
+        $data = $request->validated();
+
+        // All'interno di $request non ho il valore 'slug' da inserire nel DB, perche' viene generato in automatico e
+        // e non inserito da Utente nel Form quindi devo inserirlo manualmente per evitare errore
+        $data['slug'] = Str::slug($data['name']);
+
+        // Aggiungere variabile $fillable in Model per usare 'create'
+        $project = Project::create($data);
+
+        return to_route('projects.show', $project);
     }
 
     /**
