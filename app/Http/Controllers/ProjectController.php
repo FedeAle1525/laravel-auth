@@ -84,7 +84,20 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        // In $request ho già i dati compresi di validazione
+        $data = $request->validated();
+
+        // All'interno di $request non ho il valore 'slug' da inserire nel DB, perche' viene generato in automatico e
+        // e non inserito da Utente nel Form quindi devo inserirlo manualmente per evitare errore
+        // In caso di modifica titolo ricreo lo 'slug'
+        if ($data['name'] !== $project['name']) {
+            $data['slug'] =  Str::slug($data['name']);
+        }
+
+        // Modifico i valori del Progetto ($project) con quelli presenti nella Request ($data) ottenuti vdal Form
+        $project->update($data);
+
+        return to_route('projects.show', $project);
     }
 
     /**
