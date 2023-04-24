@@ -13,7 +13,7 @@
     <div class="mb-3">
       <label class="form-label">Nome</label>
       <div class="input-group">
-        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name">
+        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
         @error('name')
         <div class="invalid-feedback">
           {{ $message }}
@@ -25,7 +25,9 @@
     <div class="mb-3">
       <label class="form-label">Descrizione</label>
       <div class="input-group">
-        <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="6"></textarea>
+        <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="6">
+        {{ old('description') }}
+        </textarea>
         @error('description')
         <div class="invalid-feedback">
           {{ $message }}
@@ -37,7 +39,7 @@
     <div class="mb-3">
       <label class="form-label">Cliente</label>
       <div class="input-group">
-        <input type="text" class="form-control @error('client') is-invalid @enderror" name="client">
+        <input type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('client') }}">
         @error('client')
         <div class="invalid-feedback">
           {{ $message }}
@@ -49,7 +51,7 @@
     <div class="mb-3">
       <label class="form-label">URL</label>
       <div class="input-group">
-        <input type="text" class="form-control @error('url') is-invalid @enderror" name="url">
+        <input type="text" class="form-control @error('url') is-invalid @enderror" name="url" value="{{ old('url') }}">
         @error('url')
         <div class="invalid-feedback">
           {{ $message }}
