@@ -19,6 +19,7 @@
         <th scope="col">Descrizione</th>
         <th scope="col">Cliente</th>
         <th scope="col">URL</th>
+        <th scope="col">Eliminato</th>
         <th scope="col">Azioni</th>
       </tr>
     </thead>
@@ -34,7 +35,17 @@
         <td>{{$project->description}}</td>
         <td>{{$project->client}}</td>
         <td>{{$project->url}}</td>
-        <td><a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Modifica</a></td>
+        <!-- Operatore Ternario: Se il Progetto e' stato eliminato stampo la Data di Eliminazione, altimenti nulla -->
+        <td>{{ $project->trashed() ? $project->deleted_at : '' }}</td>
+        <td>
+          <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Modifica</a>
+          <form class="mt-2" action="{{ route('projects.destroy', $project) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Elimina</button>
+          </form>
+
+        </td>
       </tr>
 
       @empty

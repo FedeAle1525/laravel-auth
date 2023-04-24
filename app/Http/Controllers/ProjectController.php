@@ -16,7 +16,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        // Recupero tutti gli elementi dal DB inclusi quelli "cestinati"
+        $projects = Project::withTrashed()->get();
 
         return view('projects.index', compact('projects'));
     }
@@ -108,6 +109,16 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        if ($project->trashed()) {
+
+            // Eliminazione definitiva
+            $project->forceDelete();
+        } else {
+
+            // Eliminazione SoftDelete
+            $project->delete();
+        }
+
+        return to_route('projects.index');
     }
 }

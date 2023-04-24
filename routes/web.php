@@ -34,7 +34,8 @@ Route::middleware('auth')->group(function () {
     // Modifico il parametro accettato dalla rotta per non avere più l'ID di default ma lo 'slug'
     Route::resource('projects', ProjectController::class)->parameters([
         'projects' => 'project:slug'
-    ]);
+    ])->withTrashed(['show', 'edit', 'destroy']); // Includo i "cestinati" alle rotte per poter eseguire tutte le operazioni su di essi
+
 });
 
 require __DIR__ . '/auth.php';
