@@ -34,5 +34,9 @@
   </ul>
 </div>
 
+<div class="container py-3">
+  <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Modifica</a>
+</div>
+
 
 @endsection
