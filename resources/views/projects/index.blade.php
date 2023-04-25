@@ -19,6 +19,14 @@
 </div>
 
 <div class="container">
+
+  <!-- Se esiste la Variabile di Sessione 'message', stampo il messaggio -->
+  @if (request()->session()->exists('message'))
+  <div class="alert alert-success" role="alert">
+    {{ request()->session()->pull('message') }}
+  </div>
+  @endif
+
   <table class="table table-warning table-striped">
     <thead class="text-center">
       <tr>

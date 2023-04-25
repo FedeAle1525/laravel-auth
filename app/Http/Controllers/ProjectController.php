@@ -132,10 +132,16 @@ class ProjectController extends Controller
 
             // Eliminazione definitiva
             $project->forceDelete();
+
+            // All'interno della Sessione creo una variable messaggio che verra' mostrato al completamento dell'operazione
+            request()->session()->put('message', "Il Progetto e' stato eliminato definitivamente");
         } else {
 
             // Eliminazione SoftDelete
             $project->delete();
+
+            // All'interno della Sessione creo una variable messaggio che verra' mostrato al completamento dell'operazione
+            request()->session()->put('message', "Il Progetto e' stato spostato nel cestino");
         }
 
         // Rindirizza alla stessa pagina dove e' stato invocato il metodo (Index o Cestino)
@@ -150,6 +156,9 @@ class ProjectController extends Controller
         if ($project->trashed()) {
 
             $project->restore();
+
+            // All'interno della Sessione creo una variable messaggio che verra' mostrato al completamento dell'operazione
+            request()->session()->put('message', "Il Progetto e' stato ripristinato con successo");
         }
 
         // Rindirizza alla stessa pagina dove e' stato invocato il metodo (Index o Show)
