@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Rotta per il ripristino di un Elemento
-    Route::post('/projects/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore')->withTrashed();
+    Route::post('/projects/{project:slug}/restore', [ProjectController::class, 'restore'])->name('projects.restore')->withTrashed();
 
     // Genero tutte le Rotte CRUD per la Risorsa Post
     // Modifico il parametro accettato dalla rotta per non avere più l'ID di default ma lo 'slug'

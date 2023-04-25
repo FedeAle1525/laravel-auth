@@ -36,7 +36,7 @@
         <td>{{$project->client}}</td>
         <td>{{$project->url}}</td>
         <!-- Operatore Ternario: Se il Progetto e' stato eliminato stampo la Data di Eliminazione, altimenti nulla -->
-        <td>{{ $project->trashed() ? $project->deleted_at : '' }}</td>
+        <td>{{ $project->trashed() ? $project->deleted_at->format('d/m/Y') : '' }}</td>
         <td>
           <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Modifica</a>
 
