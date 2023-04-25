@@ -121,4 +121,18 @@ class ProjectController extends Controller
 
         return to_route('projects.index');
     }
+
+    // Metodo per il Ripristino di un Elemento
+    public function restore(Project $project)
+    {
+
+        // Ripristino l'Elemento solo se e' stato precedentemente eliminato
+        if ($project->trashed()) {
+
+            $project->restore();
+        }
+
+        // Rindirizza alla stessa pagina dove e' stato invocato il metodo (Index o Show)
+        return back();
+    }
 }

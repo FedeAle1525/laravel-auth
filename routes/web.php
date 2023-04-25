@@ -30,11 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Rotta per il ripristino di un Elemento
+    Route::post('/projects/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore')->withTrashed();
+
     // Genero tutte le Rotte CRUD per la Risorsa Post
     // Modifico il parametro accettato dalla rotta per non avere più l'ID di default ma lo 'slug'
     Route::resource('projects', ProjectController::class)->parameters([
         'projects' => 'project:slug'
-    ])->withTrashed(['show', 'edit', 'destroy']); // Includo i "cestinati" alle rotte per poter eseguire tutte le operazioni su di essi
+    ])->withTrashed(['show', 'edit', 'update', 'destroy']); // Includo i "cestinati" alle rotte per poter eseguire tutte le operazioni su di essi
 
 });
 

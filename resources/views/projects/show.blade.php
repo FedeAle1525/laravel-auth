@@ -34,8 +34,15 @@
   </ul>
 </div>
 
-<div class="container py-3">
+<div class="container py-3 d-flex justify-content-center gap-2">
   <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Modifica</a>
+
+  @if ($project->trashed())
+  <form action="{{ route('projects.restore', $project) }}" method="post">
+    @csrf
+    <button type="submit" class="btn btn-success">Ripristina</button>
+  </form>
+  @endif
 </div>
 
 

@@ -39,12 +39,19 @@
         <td>{{ $project->trashed() ? $project->deleted_at : '' }}</td>
         <td>
           <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Modifica</a>
-          <form class="mt-2" action="{{ route('projects.destroy', $project) }}" method="POST">
+
+          <form class="my-2" action="{{ route('projects.destroy', $project) }}" method="POST">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">Elimina</button>
           </form>
 
+          @if ($project->trashed())
+          <form action="{{ route('projects.restore', $project) }}" method="post">
+            @csrf
+            <button type="submit" class="btn btn-success">Ripristina</button>
+          </form>
+          @endif
         </td>
       </tr>
 
