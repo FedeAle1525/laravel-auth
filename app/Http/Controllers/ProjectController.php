@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -14,12 +15,30 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // Recupero tutti gli elementi dal DB inclusi quelli "cestinati"
-        $projects = Project::withTrashed()->get();
 
-        return view('projects.index', compact('projects'));
+    //  Aggiungo paramentro '$request' per recuperare tutti i dati passati con la Richiesta
+    public function index(Request $request)
+    {
+        // Recupero il paramentro 'trashed' passato con la richiesta
+        $trashed = $request->input('trashed');
+
+        // Se il Parametro 'trashed' esiste (=1) recupero solo gli elementi cestinati, altrimenti tutti gli altri (senza i cestinati)
+        if ($trashed) {
+
+            $projects = Project::onlyTrashed()->get();
+        } else {
+
+            $projects = Project::all();
+        }
+
+        // Eseguo la Query per contare quanti solo gli elementi eliminati
+        // Poi lo passo come paramentro per usarlo come Contatore del Cestino
+        $num_trashed = Project::onlyTrashed()->count();
+
+        // Recupero tutti gli elementi dal DB inclusi quelli "cestinati"
+        // $projects = Project::withTrashed()->get();
+
+        return view('projects.index', compact('projects', 'num_trashed'));
     }
 
     /**
@@ -119,7 +138,8 @@ class ProjectController extends Controller
             $project->delete();
         }
 
-        return to_route('projects.index');
+        // Rindirizza alla stessa pagina dove e' stato invocato il metodo (Index o Cestino)
+        return back();
     }
 
     // Metodo per il Ripristino di un Elemento

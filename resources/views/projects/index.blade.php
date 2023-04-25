@@ -5,7 +5,16 @@
   <div class="d-flex justify-content-between align-items-center">
     <h1>Progetti</h1>
 
-    <a href="{{ route('projects.create') }}" class="btn btn-primary">Nuovo Progetto</a>
+    <!-- Stampo i pulsanti solo se mi trovo nella View 'Index' -->
+    @if (request('trashed') == null)
+    <div>
+      <a href="{{ route('projects.create') }}" class="btn btn-primary">Nuovo Progetto</a>
+      <!-- Creo un pulsante per cambiare Vista e passare al 'Cestino' in cui si troveranno tutti gli elementi eliminati -->
+      <!-- Utilizzo la rotta 'Index', ma passando il paramentro 'trashed' per indicare il cambio di Vista -->
+      <a href="{{ route('projects.index', ['trashed' => true]) }}" class="btn btn-dark">Cestino ({{ $num_trashed }})</a>
+    </div>
+    @endif
+
   </div>
 </div>
 
@@ -19,7 +28,12 @@
         <th scope="col">Descrizione</th>
         <th scope="col">Cliente</th>
         <th scope="col">URL</th>
+
+        <!-- Stampo Colonna solo per i Cestinati -->
+        @if (request('trashed'))
         <th scope="col">Eliminato</th>
+        @endif
+
         <th scope="col">Azioni</th>
       </tr>
     </thead>
@@ -35,8 +49,13 @@
         <td>{{$project->description}}</td>
         <td>{{$project->client}}</td>
         <td>{{$project->url}}</td>
+
+        <!-- Stampo Colonna solo per i Cestinati -->
+        @if (request('trashed'))
         <!-- Operatore Ternario: Se il Progetto e' stato eliminato stampo la Data di Eliminazione, altimenti nulla -->
         <td>{{ $project->trashed() ? $project->deleted_at->format('d/m/Y') : '' }}</td>
+        @endif
+
         <td>
           <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Modifica</a>
 
